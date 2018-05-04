@@ -26,11 +26,22 @@ $(function() {
             expect(allFeeds.length).not.toBe(0);
         });
 
-
-        /* TODO: Write a test that loops through each feed
+         /* a test that loops through each feed
          * in the allFeeds object and ensures it has a URL defined
          * and that the URL is not empty.
          */
+
+        it('has URL defined', function() {
+            for (let i = 0; i < allFeeds.length; i++) {
+                expect(allFeeds[i].hasOwnProperty("name")).toBe(true);
+                expect(allFeeds[i].name.length).toBeGreaterThan(0);
+                expect(allFeeds[i].hasOwnProperty("url")).toBe(true);
+                expect(allFeeds[i].url.length).toBeGreaterThan(0);
+            }
+        });
+            
+
+
 
 
         /* TODO: Write a test that loops through each feed
@@ -39,20 +50,52 @@ $(function() {
          */
     });
 
+    describe('The menu', function() {
+        let body = document.body;
+        let hiddenMenu = document.querySelector(".menu-hidden");
+        let iconList = document.querySelector(".icon-list");
 
-    /* TODO: Write a new test suite named "The menu" */
+        it("is hidden by default", function() {
+            expect(body).toEqual(hiddenMenu);
+        });
+      
+        it("appears when clicked", function() {
+            iconList.click();
+            expect(body.classList.contains(".menu-hidden")).toBe(false);
+        });
+        it("disappears when clicked again", function() {
+            iconList.click();
+            iconList.click();
+            expect(body.classList.contains(".menu-hidden")).toBe(false);
+            iconList.click();
 
-        /* TODO: Write a test that ensures the menu element is
-         * hidden by default. You'll have to analyze the HTML and
-         * the CSS to determine how we're performing the
-         * hiding/showing of the menu element.
-         */
+        });
+     });
+    
 
-         /* TODO: Write a test that ensures the menu changes
-          * visibility when the menu icon is clicked. This test
-          * should have two expectations: does the menu display when
-          * clicked and does it hide when clicked again.
-          */
+     describe("Initial Entries", function() {
+        
+
+
+        beforeEach(function(done) {
+            setTimeout(function() {
+                  loadFeed(0);
+                  done();
+                }, 2);
+              });    
+
+        
+
+        it("feed is loaded", function(done) {
+            let feedChildNodes = document.querySelector(".feed").childNodes[1].childNodes[1];
+            let entry = document.querySelector(".entry");
+             
+             expect(feedChildNodes).toBeEqual(entry);
+             done();
+         });
+
+        
+     });
 
     /* TODO: Write a new test suite named "Initial Entries" */
 
